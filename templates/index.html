@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>RoadGuardian</title>
+
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+</head>
+
+<body>
+
+<h1>🚧 RoadGuardian</h1>
+
+<hr>
+
+<h2>Upload Road Video</h2>
+
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="video">
+    <button type="submit">Upload</button>
+</form>
+
+<hr>
+
+<h2>Road Damage Location</h2>
+
+<div id="map" style="height:500px;width:100%;"></div>
+
+<script>
+
+var latitude = {{ latitude|default(17.3850) }};
+var longitude = {{ longitude|default(78.4867) }};
+
+var map = L.map('map').setView([latitude, longitude], 15);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([latitude, longitude])
+    .addTo(map)
+    .bindPopup("⚠️ Pothole Detected Here")
+    .openPopup();
+
+</script>
+
+</body>
+
+</html>
